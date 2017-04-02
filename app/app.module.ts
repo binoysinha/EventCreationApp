@@ -27,6 +27,7 @@ import { NavBarComponent } from './nav/navbar.component'
 import { Error404Component } from './errors/404.component'
 import { appRoutes } from './routes'
 import { AuthService } from './user/auth.service'
+import {HttpModule} from "@angular/http";
 
 declare let toastr : Toastr;
 declare let jQuery : Object;
@@ -35,6 +36,7 @@ declare let jQuery : Object;
   imports: [
       BrowserModule,
       FormsModule,
+      HttpModule,
       ReactiveFormsModule,
       RouterModule.forRoot(appRoutes) ],
   declarations: [ 
