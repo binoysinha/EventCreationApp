@@ -1,11 +1,12 @@
-import {Component, OnInit, Inject} from '@angular/core'
+import {Component, OnInit, Inject} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {Router} from '@angular/router'
-import {AuthService} from './auth.service'
-import {TOASTR_TOKEN, Toastr} from '../common/toastr.service'
+import {Router} from '@angular/router';
+import {AuthService} from './auth.service';
+import {TOASTR_TOKEN, Toastr} from '../common/toastr.service';
 
 @Component({
-    templateUrl: 'app/user/profile.component.html',
+    moduleId: module.id,
+    templateUrl: 'profile.component.html',
     styles: [`
         em {
             float: right;
@@ -28,13 +29,12 @@ import {TOASTR_TOKEN, Toastr} from '../common/toastr.service'
         .error ::-moz-placeholder {
             color: #999;
         }
-
     `]
 })
 export class ProfileComponent implements OnInit {
     profileForm: FormGroup;
-    private firstName: FormControl
-    private lastName: FormControl
+    private firstName: FormControl;
+    private lastName: FormControl;
 
     constructor(private router: Router, private authService: AuthService,
                 @Inject(TOASTR_TOKEN) private toastr: Toastr) {
@@ -48,7 +48,7 @@ export class ProfileComponent implements OnInit {
         this.profileForm = new FormGroup({
             firstName: this.firstName,
             lastName: this.lastName,
-        })
+        });
     }
 
     cancel() {
@@ -56,25 +56,27 @@ export class ProfileComponent implements OnInit {
     }
 
     validateFirstName() {
-        return this.firstName.valid || this.firstName.untouched
+        return this.firstName.valid || this.firstName.untouched;
     }
 
     validateLastName() {
-        return this.lastName.valid || this.lastName.untouched
+        return this.lastName.valid || this.lastName.untouched;
     }
 
     saveProfile(formValues) {
         if (this.profileForm.valid) {
             this.authService.updateCurrentUser(formValues.firstName, formValues.lastName).subscribe(() => {
+                console.log('here');
+                console.log('toastr', this.toastr);
                 this.toastr.success('Profile Saved');
-            })
+            });
         }
     }
 
     logout() {
         this.authService.logout().subscribe(() => {
             this.router.navigate(['/user/login']);
-        })
+        });
     }
 
 
